@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contact / Sign‑up Form</title>
+  <style>
+    /* ========== Base & Theme ========== */
+    :root{
+      --bg: #0b1020;
+      --card: #121a33;
+      --text: #e9ecf1;
+      --muted: #aab0c0;
+      --accent: #4f7cff;
+      --accent-2: #8cd1ff;
+      --error: #ff5d5d;
+      --ring: 0 0 0 4px color-mix(in oklab, var(--accent) 30%, transparent);
+      --shadow: 0 10px 30px rgba(0,0,0,.35), 0 2px 8px rgba(0,0,0,.25);
+      --radius: 16px;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body{
+      margin:0;
+      font: 16px/1.5 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color: var(--text);
+      background:
+        radial-gradient(1200px 500px at 10% -20%, #3c4b96 0%, transparent 60%),
+        radial-gradient(1000px 600px at 110% 10%, #1d8fff40 0%, transparent 60%),
+        var(--bg);
+      display:grid;
+      place-items:center;
+      padding: 40px 16px;
+    }
+
+    .card{
+      width: min(780px, 100%);
+      background: linear-gradient(180deg, color-mix(in oklab, var(--card) 85%, #0a0f22 15%), var(--card));
+      border: 1px solid #263157;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .header{
+      padding: 28px 28px 0 28px;
+    }
+    .title{ font-size: clamp(22px, 3vw, 28px); margin: 0 0 6px; }
+    .subtitle{ color: var(--muted); margin:0 0 18px; }
+
+    form{ padding: 0 28px 28px; }
+
+    /* ========== Grid Layout ========== */
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 16px;
+    }
+    .col-6{ grid-column: span 6; }
+    .col-12{ grid-column: span 12; }
+    @media (max-width: 700px){
+      .col-6{ grid-column: span 12; }
+    }
+
+    /* ========== Fields ========== */
+    .field{ display:flex; flex-direction:column; gap:8px; }
+    label{ font-weight: 600; letter-spacing:.2px; }
+    .hint{ font-size: 12px; color: var(--muted); }
+
+    input, select, textarea{
+      background: #0e1530;
+      color: var(--text);
+      border: 1px solid #2a3a6a;
+      border-radius: 12px;
+      padding: 12px 14px;
+      outline: none;
+      transition: border-color .2s, box-shadow .2s, transform .02s;
+    }
+    input:focus-visible, select:focus-visible, textarea:focus-visible{
+      border-color: var(--accent);
+      box-shadow: var(--ring);
+    }
+    input:user-invalid, select:user-invalid, textarea:user-invalid{
+      border-color: var(--error);
+    }
+
+    /* Grouped controls */
+    fieldset{
+      border: 1px dashed #2a3a6a;
+      border-radius: 14px;
+      padding: 14px;
+      margin: 0;
+      min-inline-size: auto;
+    }
+    legend{ padding: 0 8px; color: var(--muted); }
+
+    .choices{ display:flex; flex-wrap:wrap; gap:12px; }
+    .chip{
+      display:inline-flex; align-items:center; gap:8px;
+      padding: 8px 12px; border-radius: 999px; border:1px solid #2a3a6a; cursor:pointer;
+      transition: transform .02s, box-shadow .2s, border-color .2s;
+    }
+    .chip input{ accent-color: var(--accent); }
+    .chip:hover{ border-color: var(--accent); }
+
+    /* ========== Footer / Actions ========== */
+    .footer{
+      display:flex; gap:12px; justify-content:flex-end; align-items:center;
+      margin-top: 10px;
+    }
+    .btn{
+      appearance:none; border:1px solid #2a3a6a; background:#0e1530; color:var(--text);
+      padding: 12px 16px; border-radius: 12px; cursor:pointer; font-weight: 600;
+      transition: transform .02s, border-color .2s, box-shadow .2s, background .2s;
+    }
+    .btn:hover{ border-color: var(--accent); box-shadow: var(--ring); }
+    .btn:active{ transform: translateY(1px); }
+    .btn.primary{ background: linear-gradient(180deg, color-mix(in oklab, var(--accent) 20%, transparent), transparent); border-color: var(--accent); }
+
+    /* ========== Utility ========== */
+    .visually-hidden{ position:absolute !important; clip: rect(1px, 1px, 1px, 1px); padding:0 !important; border:0 !important; height:1px !important; width:1px !important; overflow:hidden; white-space:nowrap; }
+
+    /* ========== Demo top bar ========== */
+    .topbar{
+      display:flex; justify-content:space-between; align-items:center;
+      padding: 16px 20px; background: linear-gradient(180deg, #0b122a, #0b122a00);
+      border-bottom: 1px solid #263157; gap: 10px;
+    }
+    .brand{ font-weight: 800; letter-spacing:.3px; }
+    .theme-note{ color: var(--muted); font-size: 12px; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="topbar">
+      <div class="brand">FormKit</div>
+      <div class="theme-note">Pure HTML + CSS • Client-side validation</div>
+    </div>
+
+    <div class="header">
+      <h1 class="title">Create your account</h1>
+      <p class="subtitle">Fill in the details below. Required fields are marked with *.</p>
+    </div>
+
+    <form action="#" method="post" novalidate>
+      <div class="grid">
+        <div class="field col-6">
+          <label for="first">First name *</label>
+          <input id="first" name="first" type="text" placeholder="Aarya" required minlength="2" />
+        </div>
+        <div class="field col-6">
+          <label for="last">Last name *</label>
+          <input id="last" name="last" type="text" placeholder="Shah" required minlength="2" />
+        </div>
+
+        <div class="field col-12">
+          <label for="email">Email *</label>
+          <input id="email" name="email" type="email" placeholder="you@example.com" required />
+          <div class="hint">We'll send a confirmation email.</div>
+        </div>
+
+        <div class="field col-6">
+          <label for="password">Password *</label>
+          <input id="password" name="password" type="password" placeholder="••••••••" required minlength="8" />
+          <div class="hint">Min 8 characters.</div>
+        </div>
+        <div class="field col-6">
+          <label for="phone">Phone</label>
+          <input id="phone" name="phone" type="tel" inputmode="tel" pattern="[0-9\-\s+()]{7,}" placeholder="+91 98765 43210" title="Use digits, spaces, +, ( ) or -" />
+        </div>
+
+        <div class="field col-12">
+          <label for="country">Country/Region *</label>
+          <select id="country" name="country" required>
+            <option value="" disabled selected>Select your country</option>
+            <option>India</option>
+            <option>United States</option>
+            <option>United Kingdom</option>
+            <option>Canada</option>
+            <option>Australia</option>
+            <option>Other</option>
+          </select>
+        </div>
+
+        <div class="col-12">
+          <fieldset>
+            <legend>Plan</legend>
+            <div class="choices" role="group" aria-labelledby="plan">
+              <label class="chip"><input type="radio" name="plan" value="free" checked> Free</label>
+              <label class="chip"><input type="radio" name="plan" value="pro"> Pro</label>
+              <label class="chip"><input type="radio" name="plan" value="team"> Team</label>
+            </div>
+          </fieldset>
+        </div>
+
+        <div class="field col-12">
+          <label for="message">About you</label>
+          <textarea id="message" name="message" rows="4" placeholder="Tell us a bit about how you'll use the product..."></textarea>
+        </div>
+
+        <div class="col-12">
+          <label class="chip">
+            <input type="checkbox" required>
+            I agree to the <a href="#" style="color:var(--accent-2);">Terms & Privacy</a> *
+          </label>
+        </div>
+
+        <div class="footer col-12">
+          <button class="btn" type="reset">Reset</button>
+          <button class="btn primary" type="submit">Create account</button>
+        </div>
+      </div>
+
+      <p class="hint" aria-live="polite" style="margin-top:12px">Tip: The browser will highlight any missing required fields when you submit.</p>
+    </form>
+  </div>
+</body>
+</html>
